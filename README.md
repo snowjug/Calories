@@ -1,8 +1,8 @@
 **CAL PROJECT**
-snowjug.lovable.app
+
 **Tech Stack**
 
-Lovable: [https://lovable.dev/](https://lovable.dev/?via=hill)  
+Lovable: [https://lovable.dev/](https://snowjug.lovable.app)  
 n8n: [https://n8n.io/](https://n8n.partnerlinks.io/hill)
 
 **Lovable Prompt \- Create APP**
