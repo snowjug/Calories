@@ -1,0 +1,119 @@
+{
+  "name": "MEAL Ai",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "meal ai",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ffa564d4-f5da-4be8-a258-15c9465ae7e5",
+      "name": "Webhook",
+      "webhookId": "4a91d52e-24c8-4b17-a230-69203f07e1a1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Analyze the dish in this image and provide a detailed nutritional breakdown, including estimated calories, macronutrients (protein, carbs, fats), and any notable micronutrients or health considerations.",
+        "hasOutputParser": true,
+        "options": {
+          "passthroughBinaryImages": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "5d980ad8-eeb8-4551-9f2b-114824a57b4a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        96,
+        192
+      ],
+      "id": "44291bda-a492-4291-b093-5a9c714dac81",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "eaqUc1l1kFX2Av7K",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"status\": \"success\",\n  \"food\": [\n    {\n      \"name\": \"Grilled Chicken Breast\",\n      \"quantity\": \"150g\",\n      \"calories\": 240,\n      \"protein\": 45,\n      \"carbs\": 0,\n      \"fat\": 5\n    },\n    {\n      \"name\": \"Steamed Broccoli\",\n      \"quantity\": \"100g\",\n      \"calories\": 35,\n      \"protein\": 3,\n      \"carbs\": 7,\n      \"fat\": 0\n    }\n  ],\n  \"total\": {\n    \"calories\": 275,\n    \"protein\": 48,\n    \"carbs\": 7,\n    \"fat\": 5\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        384,
+        208
+      ],
+      "id": "db2055b2-2211-428f-a1df-78c83db9743b",
+      "name": "Structured Output Parser"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "8afc9924-14c6-4c80-a4f0-3774966940d3",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2995013002b93e75617cdc160aeb69218cb883ea677cdf23e087bd9fe50fbc7b"
+  },
+  "id": "gsq5VS9ZxXkAetgx",
+  "tags": []
+}
